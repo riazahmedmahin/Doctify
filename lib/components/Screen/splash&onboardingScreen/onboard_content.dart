@@ -1,10 +1,9 @@
-// onboard_content.dart
 import 'package:app/components/Screen/MainBottomNavScreen.dart';
+import 'package:app/components/Screen/authscreen/forgetpass_screen.dart';
 import 'package:app/components/Screen/authscreen/sign_Up_form.dart';
 import 'package:app/components/Screen/authscreen/sing_in_form.dart';
 import 'package:app/components/Screen/splash&onboardingScreen/landed_content.dart';
 import 'package:flutter/material.dart';
-
 
 class OnboardContent extends StatefulWidget {
   const OnboardContent({super.key});
@@ -50,93 +49,63 @@ class _OnboardContentState extends State<OnboardContent> {
                   controller: _pageController,
                   children: [
                     const LandingContent(),
-                    SignUpForm(
+                    SigninForm(
                       pageController: _pageController,
                       onCreateAccount: _navigateToMainBottomNavScreen,
                     ),
-                    const SignInForm(),
+                    const SignupForm(),
                   ],
                 ),
               ),
             ],
           ),
-          Positioned(
-            height: 56,
-            bottom: 48 + progress * 100,
-            right: 16,
-            child: GestureDetector(
-              onTap: () {
-                if (currentPage == 0) {
+          // Show the "Get Started" button only on the first page
+          if (currentPage == 0)
+            Positioned(
+              height: 56,
+              bottom: 48 + progress * 100,
+              right: 16,
+              child: GestureDetector(
+                onTap: () {
                   _pageController.animateToPage(1,
                       duration: const Duration(milliseconds: 400),
                       curve: Curves.ease);
-                } else if (currentPage == 1) {
-                  _navigateToMainBottomNavScreen();
-                } else if (currentPage == 2) {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => MainBottomNavScreen()),
-                  );
-                }
-              },
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(25)),
-                  gradient: LinearGradient(
-                    begin: Alignment.bottomLeft,
-                    end: Alignment.topRight,
-                    stops: [0.4, 0.8],
-                    colors: [
-                      Color.fromARGB(255, 22, 108, 207),
-                      Color.fromARGB(255, 22, 108, 207),
-                    ],
+                },
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(25)),
+                    gradient: LinearGradient(
+                      begin: Alignment.bottomLeft,
+                      end: Alignment.topRight,
+                      stops: [0.4, 0.8],
+                      colors: [
+                        Color.fromARGB(255, 22, 108, 207),
+                        Color.fromARGB(255, 22, 108, 207),
+                      ],
+                    ),
                   ),
-                ),
-                child: DefaultTextStyle(
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.white,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SizedBox(
-                        width: 92 + progress * 30,
-                        child: Stack(
-                          fit: StackFit.passthrough,
-                          children: [
-                            if (currentPage == 0)
-                              const Text("Get Started"),
-                            if (currentPage == 1)
-                              const Text(
-                                "Signin",
-                                maxLines: 1,
-                                overflow: TextOverflow.fade,
-                                softWrap: false,
-                              ),
-                            if (currentPage == 2)
-                              const Text(
-                                "Create account",
-                                maxLines: 1,
-                                overflow: TextOverflow.fade,
-                                softWrap: false,
-                              ),
-                          ],
+                  child: const DefaultTextStyle(
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("Get Started"),
+                        Icon(
+                          Icons.chevron_right,
+                          size: 24,
+                          color: Colors.white,
                         ),
-                      ),
-                      const Icon(
-                        Icons.chevron_right,
-                        size: 24,
-                        color: Colors.white,
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
         ],
       ),
     );

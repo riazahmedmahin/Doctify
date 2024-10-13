@@ -1,33 +1,32 @@
 import 'package:app/components/Firebase/firebase_service.dart';
-import 'package:app/components/Screen/home_pages.dart';
+import 'package:app/components/Screen/MainBottomNavScreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class SignInForm extends StatefulWidget {
-  const SignInForm({Key? key}) : super(key: key);
+class SignupForm extends StatefulWidget {
+  const SignupForm({Key? key}) : super(key: key);
 
   @override
-  State<SignInForm> createState() => _SignInFormState();
+  State<SignupForm> createState() => _SignupFormState();
 }
 
-class _SignInFormState extends State<SignInForm> {
-
+class _SignupFormState extends State<SignupForm> {
   final FirebaseAuthService _auth = FirebaseAuthService();
 
   TextEditingController _EmailController = TextEditingController();
   TextEditingController _PasswordController = TextEditingController();
   TextEditingController _PhoneController = TextEditingController();
 
+  bool _isLoading = false; // Loading state
+
   @override
   void dispose() {
     _EmailController.dispose();
     _PasswordController.dispose();
     _PhoneController.dispose();
-    // TODO: implement dispose
     super.dispose();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +81,7 @@ class _SignInFormState extends State<SignInForm> {
                   ),
                   const SizedBox(height: 24),
                   TextFormField(
-                    controller: _PasswordController,
+                    controller: _PhoneController,
                     keyboardType: TextInputType.phone,
                     decoration: InputDecoration(
                       hintText: "Phone number",
@@ -96,11 +95,41 @@ class _SignInFormState extends State<SignInForm> {
                       ),
                     ),
                   ),
+                  SizedBox(height: 25),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: Container(
+                      margin: EdgeInsets.only(right: 5, top: 10),
+                      child: ElevatedButton(
+                        onPressed: _signup,
+                        style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(22),
+                          ),
+                          padding: EdgeInsets.symmetric(horizontal: 65, vertical: 17),
+                        ),
+                        child: SizedBox(
+                          height: 30,
+                          width: 110,// Set a fixed height for the content
+                          child: _isLoading
+                              ? Center(
+                                child: CircularProgressIndicator(
+                                  color: Colors.white,
+                                ),
+                              )
+                              : Text(
+                            'Create',
+                            style: TextStyle(fontSize: 18),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+
                 ],
               ),
             ),
             const SizedBox(height: 24),
-
           ],
         ),
       ),
@@ -108,19 +137,23 @@ class _SignInFormState extends State<SignInForm> {
   }
 
   void _signup() async {
-    String phone = _PhoneController.text;
-    String email =_EmailController.text.trim();
-    String password = _PasswordController.text.trim();
 
-    User? user =await _auth.signupWithEmailAndPassword(email, password);
-    if(user!= null){
-      print("user successfully created");
-      Get.to(HomePages());
+    setState(() {
+      _isLoading=true;
+    });
+
+    String phonr = _PhoneController.text.trim();
+    String email= _EmailController.text.trim();
+    String password = _PasswordController.text.trim();
+    User? user = await _auth.signupWithEmailAndPassword(email, password);
+    setState(() {
+      _isLoading=false;
+    });
+    if(user!=null){
+      Get.to(MainBottomNavScreen());
     }
     else{
       print("something is error");
     }
-
   }
-
 }

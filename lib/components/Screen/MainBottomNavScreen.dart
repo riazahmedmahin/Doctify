@@ -26,6 +26,7 @@ class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color.fromARGB(255, 224, 235, 251),
       body: _pages[_selectedIndex],
       bottomNavigationBar: SafeArea(
         child: Padding(

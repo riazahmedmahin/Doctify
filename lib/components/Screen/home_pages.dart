@@ -2,6 +2,9 @@ import 'package:app/wigets/UpcommingCard.dart';
 import 'package:app/wigets/category_itel.dart';
 import 'package:app/wigets/searchbar.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import 'authscreen/hello.dart';
 
 
 class HomePages extends StatefulWidget {
@@ -114,12 +117,17 @@ class _HomePagesState extends State<HomePages> {
           padding: const EdgeInsets.only(right: 8, top: 9, bottom: 8, left: 12),
           child: CircleAvatar(
             radius: 20,
-            child: ClipOval(
-              child: Image.network(
-                "https://cdn-icons-png.flaticon.com/128/3135/3135715.png",
-                fit: BoxFit.cover,
-                width: 60,
-                height: 60,
+            child: GestureDetector(
+              onTap: (){
+                Get.to(FirestoreExample());
+              },
+              child: ClipOval(
+                child: Image.network(
+                  "https://cdn-icons-png.flaticon.com/128/3135/3135715.png",
+                  fit: BoxFit.cover,
+                  width: 60,
+                  height: 60,
+                ),
               ),
             ),
           ),

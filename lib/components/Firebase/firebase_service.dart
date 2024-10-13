@@ -1,3 +1,4 @@
+import 'package:app/wigets/tostmessage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class FirebaseAuthService {
@@ -11,8 +12,14 @@ class FirebaseAuthService {
         password: password,
       );
       return credential.user;
-    } catch (e) {
-      print("Error during sign-up: $e");
+    } on FirebaseAuthException catch (e) {
+      if(e.code == 'email-already-in-use'){
+        showToast(message: "The Email is already use");
+      }
+      else{
+        showToast(message: " ${e.code}");
+      }
+
       return null;
     }
   }
@@ -25,11 +32,15 @@ class FirebaseAuthService {
         password: password,
       );
       return credential.user;
-    } catch (e) {
-      print("Error during sign-up: $e");
+    } on FirebaseAuthException catch (e) {
+      if(e.code== 'user-not-found'||e.code=='wrong-password')
+      {
+        showToast(message: "Invalid emil address");
+      }
+      else{
+        print("an error occured: ${e.code}");
+      }
       return null;
     }
   }
-
-
 }

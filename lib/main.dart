@@ -1,22 +1,28 @@
 import 'dart:io';
 
 import 'package:app/components/Screen/splash&onboardingScreen/splash_screen.dart';
+import 'package:app/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
-  Platform.isAndroid?
   await Firebase.initializeApp(
-    options: FirebaseOptions(
-        apiKey: "apiKey",
-        appId: "appId",
-        messagingSenderId: "messagingSenderId",
-        projectId: "projectId"
-    )
-  ):
-  await Firebase.initializeApp();
+    options: DefaultFirebaseOptions.currentPlatform,
+);
+  // WidgetsFlutterBinding.ensureInitialized();
+  // Platform.isAndroid?
+  // await Firebase.initializeApp(
+  //   options: FirebaseOptions(
+  //       apiKey: "apiKey",
+  //       appId: "appId",
+  //       messagingSenderId: "messagingSenderId",
+  //       projectId: "projectId"
+  //   )
+  // ):
+  // await Firebase.initializeApp(
+  // );
   runApp(const MedicalApp());
 }
 
