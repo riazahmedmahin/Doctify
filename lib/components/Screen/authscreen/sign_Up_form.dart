@@ -142,7 +142,7 @@ class _SignupFormState extends State<SignupForm> {
       _isLoading=true;
     });
 
-    String phonr = _PhoneController.text.trim();
+    String phone = _PhoneController.text.trim();
     String email= _EmailController.text.trim();
     String password = _PasswordController.text.trim();
     User? user = await _auth.signupWithEmailAndPassword(email, password);

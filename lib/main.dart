@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:app/components/Screen/splash&onboardingScreen/splash_screen.dart';
 import 'package:app/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';

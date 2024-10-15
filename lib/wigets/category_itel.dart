@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 class CategoryItem extends StatelessWidget {
   const CategoryItem({
     Key? key,
@@ -26,7 +25,6 @@ class CategoryItem extends StatelessWidget {
                 colors: [
                   Color.fromARGB(255, 187, 216, 250),
                   Color.fromARGB(255, 224, 235, 249),
-                  // End color
                 ],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
