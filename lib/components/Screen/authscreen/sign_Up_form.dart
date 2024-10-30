@@ -99,7 +99,7 @@ class _SignupFormState extends State<SignupForm> {
                   Align(
                     alignment: Alignment.centerRight,
                     child: Container(
-                      margin: EdgeInsets.only(right: 5, top: 10),
+                      margin: EdgeInsets.only(right: 5),
                       child: ElevatedButton(
                         onPressed: _signup,
                         style: ElevatedButton.styleFrom(
@@ -108,19 +108,17 @@ class _SignupFormState extends State<SignupForm> {
                           ),
                           padding: EdgeInsets.symmetric(horizontal: 65, vertical: 17),
                         ),
-                        child: SizedBox(
-                          height: 30,
-                          width: 110,// Set a fixed height for the content
-                          child: _isLoading
-                              ? Center(
-                                child: CircularProgressIndicator(
-                                  color: Colors.white,
-                                ),
-                              )
-                              : Text(
-                            'Create',
-                            style: TextStyle(fontSize: 18),
+                        child: _isLoading
+                            ? SizedBox(
+                          height: 20,
+                          width: 20,
+                          child: CircularProgressIndicator(
+                            color: Colors.white,
                           ),
+                        )
+                            : Text(
+                          'Sign In', // Correct the label
+                          style: TextStyle(fontSize: 15),
                         ),
                       ),
                     ),

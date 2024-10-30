@@ -2,6 +2,7 @@ import 'package:app/CRUD/controller.dart';
 import 'package:app/CRUD/model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_state_manager/src/simple/list_notifier.dart';
 
 class UserFormScreen extends StatelessWidget {
   // Create TextEditingControllers for the text fields
@@ -9,6 +10,8 @@ class UserFormScreen extends StatelessWidget {
   final emailController = TextEditingController();
   final phoneController = TextEditingController();
   final passwordController = TextEditingController();
+
+  
 
   final CreateUserController userController = Get.put(CreateUserController());
 
@@ -73,14 +76,7 @@ class UserFormScreen extends StatelessWidget {
       password: passwordController.text.trim(),
       phone: phoneController.text.trim(),
     );
-
     // Call the controller's createUser method to save the user in Firestore
     userController.createUser(user);
-
-    // Clear the text fields after submission
-    nameController.clear();
-    emailController.clear();
-    phoneController.clear();
-    passwordController.clear();
   }
 }

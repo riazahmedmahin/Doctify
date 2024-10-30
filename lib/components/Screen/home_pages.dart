@@ -43,6 +43,7 @@ class _HomePagesState extends State<HomePages> {
                     style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
                   ),
                   Text(
+
                     "see all",
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
