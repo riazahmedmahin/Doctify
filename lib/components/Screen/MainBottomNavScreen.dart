@@ -1,4 +1,5 @@
 import 'package:app/components/Screen/Doctor_profile.dart';
+import 'package:app/components/Screen/doctorlist.dart';
 import 'package:app/components/Screen/home_pages.dart';
 import 'package:app/components/Screen/setting.dart';
 import 'package:flutter/material.dart';
@@ -16,8 +17,10 @@ class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
   final List<Widget> _pages = [
     HomePages(),
     DoctorProfileScreen(),
+    DoctorListScreen(),
     InboxPage(),
-    MoreScreen()
+    MoreScreen(),
+
     // Add your other pages here like SearchPage(), TimePage(), etc.
   ];
 
@@ -79,13 +82,13 @@ class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
                       label: '',
                     ),
                     BottomNavigationBarItem(
-                      icon: _buildIconWithBackground(Icons.chat_bubble_outline, 2),
+                      icon: _buildIconWithBackground(Icons.person, 2),
                       label: '',
                     ),
-                    // BottomNavigationBarItem(
-                    //   icon: _buildIconWithBackground(Icons.account_box_outlined, 3),
-                    //   label: '',
-                    // ),
+                    BottomNavigationBarItem(
+                      icon: _buildIconWithBackground(Icons.account_box_outlined, 3),
+                      label: '',
+                    ),
                     BottomNavigationBarItem(
                       icon: _buildIconWithBackground(Icons.widgets_outlined, 4),
                       label: '',
