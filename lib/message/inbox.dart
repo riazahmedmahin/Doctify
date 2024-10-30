@@ -19,15 +19,15 @@ class InboxPage extends StatelessWidget {
         title: Text("Messsage"),
         backgroundColor: Color.fromARGB(255, 224, 235, 251),
         leading: Padding(
-          padding: const EdgeInsets.only(left: 8.0, top: 8, bottom: 5, right: 8),
+          padding: const EdgeInsets.only(left: 10.0, top: 12, bottom: 7, right: 10),
           child: Container(
             decoration: BoxDecoration(
               border: Border.all(),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Icon(
-              Icons.menu_open,
-              size: 20,
+              Icons.arrow_back_ios,
+              size: 15,
             ),
           ),
         ),
