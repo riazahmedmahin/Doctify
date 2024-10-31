@@ -108,7 +108,7 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Dr. Palmanicham",
+                        "Dr. Aminul Haque",
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -174,9 +174,8 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
               ),
               const SizedBox(height: 8.0),
               Text(
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do "
-                "eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do "
-                "eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                "I completed my MBBS in 2003, D. Card (BSMMU), and Ph.D. 2021 (AIU, California). Consultant cardiologist with a special interest in noninvasive and preventive cardiology. Advanced training in echocardiography (Delhi, India) ",
+
                 style: TextStyle(color: Colors.grey[600]),
               ),
               const SizedBox(height: 24.0),
@@ -411,7 +410,7 @@ class _AppointmentCard extends StatelessWidget {
           ),
           Spacer(),
           Text(
-            "Fee : 120 ",
+            "Fee : 1000 ",
             style: TextStyle(
                 fontWeight: FontWeight.bold, color: Colors.white, fontSize: 20),
           ),

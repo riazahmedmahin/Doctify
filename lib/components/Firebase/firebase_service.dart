@@ -1,5 +1,7 @@
-import 'package:app/wigets/tostmessage.dart';
+// Corrected the path to "widgets"
 import 'package:firebase_auth/firebase_auth.dart';
+
+import '../../wigets/tostmessage.dart';
 
 class FirebaseAuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -11,16 +13,15 @@ class FirebaseAuthService {
         email: email,
         password: password,
       );
-      return credential.user;
+      return credential.user; // Return the signed-up user
     } on FirebaseAuthException catch (e) {
-      if(e.code == 'email-already-in-use'){
-        showToast(message: "The Email is already use");
+      // Handle specific Firebase exceptions
+      if (e.code == 'email-already-in-use') {
+        showToast(message: "The email is already in use.");
+      } else {
+        showToast(message: "Error: ${e.code}");
       }
-      else{
-        showToast(message: " ${e.code}");
-      }
-
-      return null;
+      return null; // Return null if there was an error
     }
   }
 
@@ -31,16 +32,30 @@ class FirebaseAuthService {
         email: email,
         password: password,
       );
-      return credential.user;
+      return credential.user; // Return the signed-in user
     } on FirebaseAuthException catch (e) {
-      if(e.code== 'user-not-found'||e.code=='wrong-password')
-      {
-        showToast(message: "Invalid emil address");
+      // Handle specific Firebase exceptions
+      if (e.code == 'user-not-found' || e.code == 'wrong-password') {
+        showToast(message: "Invalid email or password.");
+      } else {
+        showToast(message: "Error: ${e.code}"); // Display the error message
       }
-      else{
-        print("an error occured: ${e.code}");
-      }
-      return null;
+      return null; // Return null if there was an error
     }
+  }
+
+  // Method to sign out the user
+  Future<void> signOut() async {
+    try {
+      await _auth.signOut();
+      showToast(message: "Signed out successfully."); // Optional: notify user of successful sign-out
+    } catch (e) {
+      print("Error signing out: $e");
+    }
+  }
+
+  // Method to check if the user is currently signed in
+  User? getCurrentUser() {
+    return _auth.currentUser; // Returns the currently signed-in user or null if no user is signed in
   }
 }

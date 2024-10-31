@@ -20,8 +20,6 @@ class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
     DoctorListScreen(),
     InboxPage(),
     MoreScreen(),
-
-    // Add your other pages here like SearchPage(), TimePage(), etc.
   ];
 
   void _onItemTapped(int index) {

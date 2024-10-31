@@ -199,7 +199,7 @@ class TopDoctorsList extends StatelessWidget {
         return GridView.builder(
           shrinkWrap: true,
           physics: NeverScrollableScrollPhysics(),
-          itemCount: doctors.length,
+          itemCount: 2,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2, // Two cards per row
             crossAxisSpacing: 10,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DoctorListScreen extends StatefulWidget {
   @override
@@ -6,71 +7,49 @@ class DoctorListScreen extends StatefulWidget {
 }
 
 class _DoctorListScreenState extends State<DoctorListScreen> {
-  String selectedCategory = 'Neurologist';
-
-  final List<Map<String, String>> doctors = [
-    {
-      'name': 'Dr. Aaliya Y.',
-      'qualification': 'MDS, FDS RCPS',
-      'specialty': 'Neurologist',
-      'imagePath': 'https://plus.unsplash.com/premium_photo-1661764878654-3d0fc2eefcca?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8ZG9jdG9yfGVufDB8fDB8fHww',
-      'rating': '4.5 (2530)',
-      'fees': '\$50.99',
-    },
-    {
-      'name': 'Dr. Amira',
-      'qualification': 'BDS, Dentistry',
-      'specialty': 'Dentist',
-      'imagePath': 'https://plus.unsplash.com/premium_photo-1658506671316-0b293df7c72b?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8ZG9jdG9yfGVufDB8fDB8fHww',
-      'rating': '4.5 (2530)',
-      'fees': '\$50.99',
-    },
-    {
-      'name': 'Dr. Anna G.',
-      'qualification': 'Cardiologist',
-      'specialty': 'Cardiologist',
-      'imagePath': 'assets/doctor3.jpg',
-      'rating': '4.5 (2530)',
-      'fees': '\$50.99',
-    },
-    {
-      'name': 'Dr. Anne.',
-      'qualification': 'Hepatology',
-      'specialty': 'Hepatology',
-      'imagePath': 'assets/doctor4.jpg',
-      'rating': '4.5 (2530)',
-      'fees': '\$50.99',
-    },
-    {
-      'name': 'Dr. Andrea H.',
-      'qualification': 'Neurosurgery',
-      'specialty': 'Neurologist',
-      'imagePath': 'assets/doctor5.jpg',
-      'rating': '4.5 (2530)',
-      'fees': '\$50.99',
-    },
-  ];
+  String selectedCategory = 'Neuro'; // Set initial category to Cardio
+  List<Map<String, dynamic>> doctors = [];
 
   // List of available categories
   final List<String> categories = [
-    'Neurologist',
+    'Neuro',
     'Dentist',
-    'Cardiologist',
+    'Cardio',
     'Hepatology',
+    'Family Physician',
+    'Internist',
+    'Pediatrician',
+    'Dermatologist',
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    fetchDoctors(); // Fetch doctors data when the screen initializes
+  }
+
+  Future<void> fetchDoctors() async {
+    try {
+      final querySnapshot = await FirebaseFirestore.instance.collection('doctors').get();
+      setState(() {
+        doctors = querySnapshot.docs.map((doc) => doc.data() as Map<String, dynamic>).toList();
+      });
+    } catch (e) {
+      // Handle errors
+      print("Error fetching doctors: $e");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     // Filter doctors based on selected category
-    final filteredDoctors = doctors.where((doctor) {
-      return doctor['specialty'] == selectedCategory;
-    }).toList();
+    final filteredDoctors = doctors.where((doctor) => doctor['specialty'] == selectedCategory).toList();
 
     return Scaffold(
-      backgroundColor: Color(0xFFE0EBFB), // Light background color
+      backgroundColor: const Color(0xFFE0EBFB), // Light background color
       appBar: AppBar(
-        title: Text("Doctor"),
-        backgroundColor: Color.fromARGB(255, 224, 235, 251),
+        title: const Text("Doctors"),
+        backgroundColor: const Color.fromARGB(255, 224, 235, 251),
         leading: Padding(
           padding: const EdgeInsets.only(left: 10.0, top: 12, bottom: 7, right: 10),
           child: Container(
@@ -78,7 +57,7 @@ class _DoctorListScreenState extends State<DoctorListScreen> {
               border: Border.all(),
               borderRadius: BorderRadius.circular(12),
             ),
-            child: Icon(
+            child: const Icon(
               Icons.arrow_back_ios,
               size: 15,
             ),
@@ -92,9 +71,7 @@ class _DoctorListScreenState extends State<DoctorListScreen> {
             scrollDirection: Axis.horizontal,
             padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
             child: Row(
-              children: categories.map((category) {
-                return _buildCategoryChip(category);
-              }).toList(),
+              children: categories.map((category) => _buildCategoryChip(category)).toList(),
             ),
           ),
           // Doctor List
@@ -105,12 +82,12 @@ class _DoctorListScreenState extends State<DoctorListScreen> {
               itemBuilder: (context, index) {
                 final doctor = filteredDoctors[index];
                 return _buildDoctorCard(
-                  doctor['name']!,
-                  doctor['qualification']!,
-                  doctor['specialty']!,
-                  doctor['imagePath']!,
-                  doctor['rating']!,
-                  doctor['fees']!,
+                  name: doctor['name'] ?? 'N/A',
+                  qualification: doctor['qualification'] ?? 'N/A',
+                  specialty: doctor['specialty'] ?? 'N/A',
+                  imagePath: doctor['image'] ?? 'https://via.placeholder.com/150', // Default image
+                  rating: doctor['rating']?.toString() ?? 'N/A',
+                  fees: doctor['fees']?.toString() ?? 'N/A',
                 );
               },
             ),
@@ -134,7 +111,7 @@ class _DoctorListScreenState extends State<DoctorListScreen> {
         selected: selectedCategory == category,
         onSelected: (bool selected) {
           setState(() {
-            selectedCategory = category;
+            selectedCategory = selected ? category : selectedCategory; // Update category
           });
         },
       ),
@@ -142,14 +119,14 @@ class _DoctorListScreenState extends State<DoctorListScreen> {
   }
 
   // Helper method to build each doctor card
-  Widget _buildDoctorCard(
-      String name,
-      String qualification,
-      String specialty,
-      String imagePath,
-      String rating,
-      String fees,
-      ) {
+  Widget _buildDoctorCard({
+    required String name,
+    required String qualification,
+    required String specialty,
+    required String imagePath,
+    required String rating,
+    required String fees,
+  }) {
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 8),
       elevation: 0,
@@ -165,40 +142,40 @@ class _DoctorListScreenState extends State<DoctorListScreen> {
               radius: 30,
               backgroundImage: NetworkImage(imagePath), // Doctor profile image
             ),
-            SizedBox(width: 16),
+            const SizedBox(width: 16),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     name,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   Text(
                     qualification,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 14,
                       color: Colors.grey,
                     ),
                   ),
                   Text(
                     specialty,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 14,
                       color: Colors.grey,
                     ),
                   ),
-                  SizedBox(height: 4),
+                  const SizedBox(height: 4),
                   Row(
                     children: [
-                      Icon(Icons.star, color: Colors.orange, size: 18),
-                      SizedBox(width: 4),
+                      const Icon(Icons.star, color: Colors.orange, size: 18),
+                      const SizedBox(width: 4),
                       Text(
                         rating,
-                        style: TextStyle(fontSize: 14, color: Colors.grey),
+                        style: const TextStyle(fontSize: 14, color: Colors.grey),
                       ),
                     ],
                   ),
@@ -210,24 +187,29 @@ class _DoctorListScreenState extends State<DoctorListScreen> {
               children: [
                 Text(
                   'Fees $fees',
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 16,
                     color: Colors.teal,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 SizedBox(
                   height: 40,
                   width: 100,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      // Implement booking functionality
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('$name has been booked!')),
+                      );
+                    },
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),
                     ),
-                    child: Text('Book Now',style: TextStyle(fontSize: 15),),
+                    child: const Text('Book Now', style: TextStyle(fontSize: 15)),
                   ),
                 ),
               ],

@@ -13,17 +13,17 @@ class MoreScreen extends StatelessWidget {
             children: [
               CircleAvatar(
                 radius: 40,
-                backgroundImage: NetworkImage('https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=3087&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'), // Replace with your image path
+                backgroundImage: NetworkImage('https://avatars.githubusercontent.com/u/71597653?v=4'), // Replace with your image path
               ),
               SizedBox(height: 10),
               Text(
-                'Jhon Doe',
+                'Riaz Ahmed',
                 style: TextStyle(
                     fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
               ),
               SizedBox(height: 5),
               Text(
-                '@Dhondoe',
+                '@riazahmed',
                 style: TextStyle(color: Colors.grey),
               ),
               SizedBox(height: 20),
