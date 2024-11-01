@@ -1,5 +1,5 @@
 import 'package:app/components/Screen/Doctor_profile.dart';
-import 'package:app/components/Screen/doctorlist.dart';
+import 'package:app/components/Screen/Doctor_list_screen.dart';
 import 'package:app/components/Screen/home_pages.dart';
 import 'package:app/components/Screen/setting.dart';
 import 'package:flutter/material.dart';

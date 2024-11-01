@@ -30,25 +30,23 @@ class _SplashScreenState extends State<SplashScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Spacer(),
-            // Row to separate the 'D' and the rest of the text 'octify'
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // Yellow circle around 'D'
+                
                 CircleAvatar(
-                  radius: 22, // Adjust the circle size as needed
-                  backgroundColor: Colors.yellow, // Yellow background
+                  radius: 22, 
+                  backgroundColor: Colors.yellow, 
                   child: Text(
                     "D",
                     style: TextStyle(
-                      fontSize: 30, // Adjust font size as needed
+                      fontSize: 30, 
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
                     ),
                   ),
                 ),
-                //const SizedBox(width: 8), // Space between 'D' and 'octify'
-                // Rest of the text 'octify'
+             
                 Text(
                   "octify",
                   style: TextStyle(
