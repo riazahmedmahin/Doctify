@@ -17,7 +17,6 @@ class FirestoreExample extends StatelessWidget {
           if (snapshot.hasError) {
             return Text("Error: ${snapshot.error}");
           }
-
           final productData = snapshot.data!.docs;
           return ListView.builder(
             itemCount: productData.length,
